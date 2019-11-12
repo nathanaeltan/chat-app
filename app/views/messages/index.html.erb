@@ -1,3 +1,4 @@
+
 <style>
   .icon-flipped {
   transform: scaleX(-1);
@@ -10,35 +11,29 @@
 }
 </style>
 
-<div class="container text-center border">
 
-<div class="panel panel-default">
-<% if @over_5 %>
- <%= link_to 'Show All', '?m=all', class: 'btn btn-link pull-right' %>
-<% end %>
-<%= link_to '<i class="glyphicon glyphicon-log-out icon-flipped"></i>'.html_safe,
-'/conversations', { :class => 'tooltips, btn btn-link', 'data-toggle' => 'tooltip',
-   'data-placement' => 'right', :title => 'Back To Inbox' } %>
+<%# <div id="msg"></div> %>
+<div id="msg" class="container text-center border">
+
+
 
  <% @messages.each do |message| %>
   <% if message.body %>
    <% user = User.find(message.user_id) %>
-   <div class="item">
-<div class="panel-heading">
-       <div class="header"><strong><%= user.email.split('@')[0].capitalize %> </strong>: <p><%= message.body %> </p>  <i><%= time_ago_in_words(message.created_at) %> ago</i> </div>
-      <div class="list">
-       
-       
-    
-    </div>
-   </div>
- </div>
+   
+<div>
+<strong><%= user.email.split('@')[0].capitalize %> </strong>: <p><%= message.body %> </p>  <i><%= time_ago_in_words(message.created_at) %> ago</i> 
+</div>
+   
+   <strong></strong>
+
  <% end %>
 <% end %>
+
 </div>
-</div>
+
 <div class="col">
-<%= form_for [@conversation, @message] do |f| %>
+<%= form_for [@conversation, @message], remote: true do |f| %>
 <div class="form-group">
   <%= f.text_area :body, class: "form-control" %>
 </div>
@@ -49,3 +44,5 @@
 <% end %>
 </div>
 </div>
+
+
